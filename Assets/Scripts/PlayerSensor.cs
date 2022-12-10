@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Camera : MonoBehaviour {
-    public Player player;
+public class PlayerSensor : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
@@ -11,7 +11,6 @@ public class Camera : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        transform.position = Vector3.Scale(new Vector3(4, 1, 4), player.transform.position);
-        transform.LookAt(player.transform);
     }
+    
 }

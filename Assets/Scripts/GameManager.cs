@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     public Block block;
     const int num = 18;
     public Camera mainCamera;
+    int numBlocks = 0;
 
     Block[] bruh;
 
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour {
             newPrism.angle = angle;
             newPrism.layer = 0;
             newPrism.GoToPosition();
+            newPrism.name = "Block " + i;
+            numBlocks++;
             ring[i] = newPrism;
             i++;
         }

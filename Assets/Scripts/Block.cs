@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using cakeslice;
 using UnityEngine;
 
 public class Block : MonoBehaviour {
@@ -9,7 +10,9 @@ public class Block : MonoBehaviour {
     public bool flipping;
 
     public float angle;
-    public float layer;
+    public int layer;
+
+    public Outline outline;
 
     Vector3 frontPoint, backPoint, axis;
     float flipDeg = 0;
@@ -17,6 +20,7 @@ public class Block : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         flipping = false;
+        outline.enabled = false;
     }
 
     // Update is called once per frame
@@ -33,21 +37,31 @@ public class Block : MonoBehaviour {
 
             Debug.DrawLine(frontPoint, backPoint, Color.red);
             var degToFlip = degPerSec * Time.deltaTime;
-            if(flipDeg + degToFlip > 90) {
+            if (flipDeg + degToFlip > 90) {
                 degToFlip = 90 - flipDeg;
                 flipping = false;
                 flipDeg = 0;
             } else {
                 flipDeg += degToFlip;
             }
+
             transform.RotateAround(backPoint, axis, -degToFlip);
         }
     }
 
     public void GoToPosition() {
+        GoToPosition(gameObject, angle, layer);
+    }
+
+    public static void GoToPosition(GameObject target, float angle, int layer) {
         var x = Block.RingRad * Mathf.Cos(angle * Mathf.Deg2Rad);
         var z = Block.RingRad * Mathf.Sin(angle * Mathf.Deg2Rad);
-        transform.position = new Vector3(x, layer, z);
-        transform.rotation = Quaternion.Euler(0, -angle - 90, 0);
+        target.transform.position = new Vector3(x, layer, z);
+        target.transform.rotation = Quaternion.Euler(0, -angle - 90, 0);
+    }
+
+    public void SetOutline(bool on) {
+        outline.enabled = on;
+        Debug.Log("Outline: " + on);
     }
 }
