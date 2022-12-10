@@ -4,17 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-    public GameObject prism;
+    public Block block;
     const int num = 18;
+    public Camera mainCamera;
 
-    const float radius = 2.8f;
-
-    //float oldRadius;
-    GameObject[] bruh;
+    Block[] bruh;
 
     // Start is called before the first frame update
     void Start() {
-        //oldRadius = radius;
         bruh = MakeRing();
     }
 
@@ -31,20 +28,27 @@ public class GameManager : MonoBehaviour {
         */
     }
 
-    GameObject[] MakeRing() {
-        var ring = new GameObject[num];
+    Block[] MakeRing() {
+        var ring = new Block[num + 1];
         const int change = 360 / num;
         var i = 0;
+        float x, z;
+        Block newPrism;
         for (float angle = 0; angle < 360; angle += change) {
             Debug.Log(angle);
-            var x = radius * Mathf.Cos(angle * Mathf.Deg2Rad);
-            var z = radius * Mathf.Sin(angle * Mathf.Deg2Rad);
-            var newPrism = Instantiate(prism, new Vector3(x, 0, z), Quaternion.identity);
-            newPrism.transform.Rotate(0, 360 - angle, 0);
+            newPrism = Instantiate(block);
+            newPrism.angle = angle;
+            newPrism.layer = 0;
+            newPrism.GoToPosition();
             ring[i] = newPrism;
             i++;
         }
 
+
+        newPrism = Instantiate(block);
+        newPrism.angle = 0;
+        newPrism.layer = 1;
+        newPrism.GoToPosition();
         return ring;
     }
 }
