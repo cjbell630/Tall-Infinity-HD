@@ -10,9 +10,13 @@ public class Util : MonoBehaviour {
     // Update is called once per frame
     void Update() {
     }
-    
+
     // for negative numbers
     public static int LogicallyCorrectModulus(int number, int range) {
         return (range + (number % range)) % range;
+    }
+    
+    public static float ArcLength(float radius, float deg) {
+        return radius * deg * Mathf.Deg2Rad;
     }
 }

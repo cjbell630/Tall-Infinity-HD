@@ -18,22 +18,12 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        /*
-        if (Math.Abs(radius - oldRadius) < 0.001) return;
-        oldRadius = radius;
-        foreach (var t in bruh) {
-            Destroy(t);
-        }
-
-        bruh = MakeRing();
-        */
     }
 
     Block[] MakeRing() {
         var ring = new Block[num + 1];
         const int change = 360 / num;
         var i = 0;
-        float x, z;
         Block newPrism;
         for (float angle = 0; angle < 360; angle += change) {
             Debug.Log(angle);
