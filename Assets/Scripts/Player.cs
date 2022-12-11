@@ -29,7 +29,8 @@ public class Player : MonoBehaviour {
             transform.RotateAround(Vector3.zero, Vector3.up, SPEED * horizontalInput * Time.deltaTime);
             angle -= SPEED * horizontalInput * Time.deltaTime;
             // set sensor position to the position of the block with the majority of the player over it
-            Block.GoToPosition(playerSensor.transform, angle - angle % 20 + (angle % 20 < 10 ? 0 : 20), layer - 1);
+            int angleMod = Util.LogicallyCorrectModulus((int)angle, 20);
+            Block.GoToPosition(playerSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20), layer - 1);
         }
     }
 
