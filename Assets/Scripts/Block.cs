@@ -53,7 +53,7 @@ public class Block : MonoBehaviour {
         GoToPosition(transform, angle, layer);
     }
 
-    public static void GoToPosition(Transform targetTransform, float angle, int layer) {
+    public static void GoToPosition(Transform targetTransform, float angle, float layer) {
         var x = Block.RingRad * Mathf.Cos(angle * Mathf.Deg2Rad);
         var z = Block.RingRad * Mathf.Sin(angle * Mathf.Deg2Rad);
         targetTransform.position = new Vector3(x, layer, z);
