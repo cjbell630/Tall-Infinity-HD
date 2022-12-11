@@ -50,14 +50,14 @@ public class Block : MonoBehaviour {
     }
 
     public void GoToPosition() {
-        GoToPosition(gameObject, angle, layer);
+        GoToPosition(transform, angle, layer);
     }
 
-    public static void GoToPosition(GameObject target, float angle, int layer) {
+    public static void GoToPosition(Transform targetTransform, float angle, int layer) {
         var x = Block.RingRad * Mathf.Cos(angle * Mathf.Deg2Rad);
         var z = Block.RingRad * Mathf.Sin(angle * Mathf.Deg2Rad);
-        target.transform.position = new Vector3(x, layer, z);
-        target.transform.rotation = Quaternion.Euler(0, -angle - 90, 0);
+        targetTransform.position = new Vector3(x, layer, z);
+        targetTransform.rotation = Quaternion.Euler(0, -angle - 90, 0);
     }
 
     public void SetOutline(bool on) {

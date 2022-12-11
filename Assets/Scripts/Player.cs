@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        angle = 0;
+        angle = 90;
         layer = 1;
         transform.position = new Vector3(0, layer, Block.RingRad);
         targetedBlock = null;
@@ -24,10 +24,12 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        float horizontalInput = Input.GetAxis("Horizontal"); // -1 to 1
+        var horizontalInput = Input.GetAxis("Horizontal"); // -1 to 1
         if (horizontalInput != 0) {
             transform.RotateAround(Vector3.zero, Vector3.up, SPEED * horizontalInput * Time.deltaTime);
-            Block.GoToPosition(playerSensor.gameObject, angle - (angle % 20), layer - 1);
+            angle -= SPEED * horizontalInput * Time.deltaTime;
+            // set sensor position to the position of the block with the majority of the player over it
+            Block.GoToPosition(playerSensor.transform, angle - angle % 20 + (angle % 20 < 10 ? 0 : 20), layer - 1);
         }
     }
 
