@@ -7,6 +7,7 @@ public class Block : MonoBehaviour {
     const float degPerSec = 240;
     public static readonly float SmallEdgeLength = 0.647346038583f; // 1-2tan(10deg)
     public static readonly float RingRad = 2.33564090981f; // (tan(80deg)-1)/2
+    public static readonly float Height = 1;
     public bool flipping;
 
     public float angle;
