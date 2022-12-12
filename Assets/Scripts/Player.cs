@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
     void Update() {
     }
 
-    public void UpdatePosition(float horizontalInput) {
+    public void UpdatePosition(float horizontalInput , bool primaryButton) { // TODO make primaryButton ButtonState
         var increaseTilt = false;
         if (!playerSensor.colliding) {
             // if there is nothing below player
@@ -56,6 +56,10 @@ public class Player : MonoBehaviour {
         }
 
         if (horizontalInput != 0) {
+            /*
+            if (primaryButton && playerSensor.colliding && playerSensor.targetedBlock.CanFlip()) {
+                //TODO
+            }*/
             if (horizontalSensor.isColliding /*&& Math.Abs(Util.LogicallyCorrectModulus((int)angle, 20)) == 0*/) {
                 transform.Translate(new Vector3(0, V_UNITS_PER_SEC * Mathf.Abs(horizontalInput) * Time.deltaTime, 0));
                 increaseTilt = true;

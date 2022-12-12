@@ -10,6 +10,7 @@ public class Controls : MonoBehaviour {
     };
 
     public static float HorizontalInput;
+    public static bool PrimaryButton; //TODO make ButtonState
     public Player player;
 
     // Start is called before the first frame update
@@ -21,7 +22,7 @@ public class Controls : MonoBehaviour {
     void Update() {
         // TODO if game being played
         GetInput();
-        player.UpdatePosition(HorizontalInput);
+        player.UpdatePosition(HorizontalInput, PrimaryButton);
     }
 
     void GetInput() {
@@ -34,6 +35,7 @@ public class Controls : MonoBehaviour {
             // TODO touch controls
         } else {
             HorizontalInput = Input.GetAxis("Horizontal");
+            PrimaryButton = Input.GetButton("Submit");
         }
     }
 }
