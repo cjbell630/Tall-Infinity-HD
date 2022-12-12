@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0964c12d60b4c41968f5fac80f9f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetedBlock: {fileID: 0}
+  colliding: 0
 --- !u!1 &220534603
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5be11f6387b5eb419da971e124bbee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: 0
 --- !u!54 &220534606
 Rigidbody:
   m_ObjectHideFlags: 0
