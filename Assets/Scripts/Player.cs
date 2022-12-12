@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
         }
 
         if (horizontalInput != 0) {
-            if (horizontalSensor.isColliding && Math.Abs(Util.LogicallyCorrectModulus((int)angle, 20)) == 0) {
+            if (horizontalSensor.isColliding /*&& Math.Abs(Util.LogicallyCorrectModulus((int)angle, 20)) == 0*/) {
                 transform.Translate(new Vector3(0, V_UNITS_PER_SEC * Mathf.Abs(horizontalInput) * Time.deltaTime, 0));
             } else {
                 transform.RotateAround(Vector3.zero, Vector3.up, -DEG_PER_SEC * horizontalInput * Time.deltaTime);
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
         // set sensor position to the position of the block with the majority of the player over it
         Block.GoToPosition(playerSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20), layer - 1);
         Block.GoToPosition(horizontalSensor.transform,
-            angle - angleMod + (angleMod < 10 ? 0 : 20) + (horizontalInput > 0 ? 20 : -20),
+            angle - angleMod + (angleMod < 10 ? 0 : 20) /*+ (horizontalInput > 0 ? 20 : -20)*/,
             Mathf.Floor(layer));
 
 
