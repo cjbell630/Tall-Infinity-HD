@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerSensor : MonoBehaviour {
+public class VerticalSensor : MonoBehaviour {
     public Block targetedBlock;
     public bool colliding = false;
 

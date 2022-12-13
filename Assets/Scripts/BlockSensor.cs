@@ -14,7 +14,7 @@ public class BlockSensor : MonoBehaviour {
     void Update() {
     }
 
-    //TODO copied from PlayerSensor; abstractifuy
+    //TODO copied from VerticalSensor; abstractifuy
     void OnTriggerEnter(Collider other) {
         Debug.Log("ttrigger enter");
         var otherBlock = other.GetComponent<BlockSensor>();

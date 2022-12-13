@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
     static readonly float
         TILT_DEG_PER_SEC = MAX_TILT * V_UNITS_PER_SEC / (Block.Height * 4); // takes 2 blocks to tilt 90 deg
 
-    PlayerSensor playerSensor;
+    VerticalSensor verticalSensor;
     HorizontalSensor horizontalSensor;
     PlayerPlane playerPlane;
 
@@ -29,11 +29,11 @@ public class Player : MonoBehaviour {
         angle = 100;
         layer = 2;
         Block.GoToPosition(transform, angle, layer);
-        playerSensor = GetComponentInChildren<PlayerSensor>();
+        verticalSensor = GetComponentInChildren<VerticalSensor>();
         horizontalSensor = GetComponentInChildren<HorizontalSensor>();
         playerPlane = GetComponentInChildren<PlayerPlane>();
         int angleMod = Util.LogicallyCorrectModulus((int)angle, 20);
-        Block.GoToPosition(playerSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20),
+        Block.GoToPosition(verticalSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20),
             Mathf.FloorToInt(layer - 1));
     }
 
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
     public void UpdatePosition(float horizontalInput, bool primaryButton) {
         // TODO make primaryButton ButtonState
         var increaseTilt = false;
-        if (!playerSensor.colliding) {
+        if (!verticalSensor.colliding) {
             // if there is nothing below player
             // TODO player movement should completely overwrite gravity... right?
             Debug.Log("notjing below");
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 
         if (horizontalInput != 0) {
             /*
-            if (primaryButton && playerSensor.colliding && playerSensor.targetedBlock.CanFlip()) {
+            if (primaryButton && verticalSensor.colliding && verticalSensor.targetedBlock.CanFlip()) {
                 //TODO
             }*/
             if (horizontalSensor.isColliding /*&& Math.Abs(Util.LogicallyCorrectModulus((int)angle, 20)) == 0*/) {
@@ -92,13 +92,13 @@ public class Player : MonoBehaviour {
 
         int angleMod = Util.LogicallyCorrectModulus((int)angle, 20);
         // set sensor position to the position of the block with the majority of the player over it
-        Block.GoToPosition(playerSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20), layer - 1);
+        Block.GoToPosition(verticalSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20), layer - 1);
         Block.GoToPosition(horizontalSensor.transform,
             angle - angleMod + (angleMod < 10 ? 0 : 20) /*+ (horizontalInput > 0 ? 20 : -20)*/,
             Mathf.Floor(layer));
 
 
-        Debug.DrawLine(transform.position, playerSensor.transform.position, Color.red);
+        Debug.DrawLine(transform.position, verticalSensor.transform.position, Color.red);
         Debug.DrawLine(transform.position, horizontalSensor.transform.position, Color.green);
     }
 }
