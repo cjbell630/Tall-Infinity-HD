@@ -11,6 +11,14 @@ public class GameManager : MonoBehaviour {
 
     Block[] bruh;
 
+    public enum GameState {
+        Loading,
+        Playing
+    };
+    public GameState gameState = GameState.Loading;
+
+    float loadTime = 1f; //TODO
+
     // Start is called before the first frame update
     void Start() {
         bruh = MakeRing();
@@ -18,6 +26,11 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if(loadTime > 0) {
+            loadTime -= Time.deltaTime;
+        } else {
+            gameState = GameState.Playing;
+        }
     }
 
     Block[] MakeRing() {
@@ -36,8 +49,7 @@ public class GameManager : MonoBehaviour {
             ring[i] = newPrism;
             i++;
         }
-
-
+        
         newPrism = Instantiate(block);
         newPrism.angle = 0;
         newPrism.layer = 1;

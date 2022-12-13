@@ -20,6 +20,8 @@ public class Block : MonoBehaviour {
     public BlockSensor upSensor, leftSensor, downSensor, rightSensor;
     float flipDeg = 0;
 
+    public bool ready = false;
+
     // Start is called before the first frame update
     void Start() {
         flippingDirection = Util.Direction.None;

@@ -371,6 +371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   block: {fileID: 1349083149}
   mainCamera: {fileID: 963194227}
+  gameState: 0
 --- !u!4 &421601037
 Transform:
   m_ObjectHideFlags: 0
@@ -399,6 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 220534605}
+  gameManager: {fileID: 421601036}
 --- !u!1 &446142339
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,14 +649,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504758237}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 220534604}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!114 &504758242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +993,7 @@ MonoBehaviour:
   leftSensor: {fileID: 0}
   downSensor: {fileID: 0}
   rightSensor: {fileID: 0}
+  ready: 0
 --- !u!4 &1349083150
 Transform:
   m_ObjectHideFlags: 0

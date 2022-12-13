@@ -17,9 +17,10 @@ public class PlayerSensor : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log("ttrigger enter");
+        Debug.Log("player sensor ttrigger enter");
         var otherBlock = other.GetComponent<Block>();
         if (otherBlock != null) {
+            Debug.Log("is block");
             if (targetedBlock != null) {
                 targetedBlock.SetOutline(false);
             }

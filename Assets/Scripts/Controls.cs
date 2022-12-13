@@ -12,6 +12,7 @@ public class Controls : MonoBehaviour {
     public static float HorizontalInput;
     public static bool PrimaryButton; //TODO make ButtonState
     public Player player;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start() {
@@ -20,9 +21,10 @@ public class Controls : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        // TODO if game being played
-        GetInput();
-        player.UpdatePosition(HorizontalInput, PrimaryButton);
+        if (gameManager.gameState == GameManager.GameState.Playing) {
+            GetInput();
+            player.UpdatePosition(HorizontalInput, PrimaryButton);
+        }
     }
 
     void GetInput() {
