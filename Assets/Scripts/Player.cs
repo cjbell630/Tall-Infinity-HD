@@ -73,15 +73,10 @@ public class Player : MonoBehaviour {
         layer = transform.position.y;
 
         /* TILT */
-        if (increaseTilt) {
-            playerPlane.transform.RotateAround(
-                transform.TransformPoint(new Vector3(0, -0.5f, 0)), transform.forward,
-                -TILT_DEG_PER_SEC * horizontalInput * Time.deltaTime
-            );
-            tiltAngle -= TILT_DEG_PER_SEC * horizontalInput * Time.deltaTime;
-        } else {
-            var amountToTilt = (Math.Sign(tiltAngle)) *
-                               -Mathf.Min(Mathf.Abs(tiltAngle), 2 * TILT_DEG_PER_SEC * Time.deltaTime);
+        if (increaseTilt || tiltAngle > 0) {
+            var amountToTilt = increaseTilt
+                ? TILT_DEG_PER_SEC * horizontalInput * Time.deltaTime
+                : Math.Sign(tiltAngle) * -Mathf.Min(Mathf.Abs(tiltAngle), 2 * TILT_DEG_PER_SEC * Time.deltaTime);
             playerPlane.transform.RotateAround(
                 transform.TransformPoint(new Vector3(0, -0.5f, 0)), transform.forward,
                 amountToTilt
