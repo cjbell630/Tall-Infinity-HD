@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using cakeslice;
@@ -8,7 +9,6 @@ public class Block : MonoBehaviour {
     public static readonly float SmallEdgeLength = 0.647346038583f; // 1-2tan(10deg)
     public static readonly float RingRad = 2.33564090981f; // (tan(80deg)-1)/2
     public static readonly float Height = 1;
-    public Util.Direction flippingDirection;
 
     public float angle;
     public int layer;
@@ -18,39 +18,29 @@ public class Block : MonoBehaviour {
     Vector3 frontPoint, backPoint, axis;
 
     public BlockSensor upSensor, leftSensor, downSensor, rightSensor;
-    float flipDeg = 0;
+    float flipDeg;
 
     public bool ready = false;
 
     // Start is called before the first frame update
     void Start() {
-        flippingDirection = Util.Direction.None;
+        flipDeg = 0;
         outline.enabled = false;
     }
 
     // Update is called once per frame
     void Update() {
-        if (flippingDirection != Util.Direction.None) {
-            if (flipDeg == 0) {
-                frontPoint = transform.TransformPoint(new Vector3(SmallEdgeLength / 2, -0.5f, 0.5f));
-                backPoint = transform.TransformPoint(new Vector3(0.5f, -0.5f, -0.5f));
-                axis = frontPoint - backPoint;
-                angle += 20;
-                GoToPosition();
-                transform.RotateAround(backPoint, axis, 90);
-            }
-
+        if (flipDeg != 0) {
             Debug.DrawLine(frontPoint, backPoint, Color.red);
-            var degToFlip = degPerSec * Time.deltaTime;
-            if (flipDeg + degToFlip > 90) {
-                degToFlip = 90 - flipDeg;
-                flippingDirection = Util.Direction.None;
+            var degToFlip = MathF.Sign(flipDeg) * degPerSec * Time.deltaTime;
+            if (Math.Abs(flipDeg) - Math.Abs(degToFlip) < 0) {
+                degToFlip = flipDeg;
                 flipDeg = 0;
             } else {
-                flipDeg += degToFlip;
+                flipDeg -= degToFlip;
             }
 
-            transform.RotateAround(backPoint, axis, (flippingDirection == Util.Direction.Right ? -1 : 1) * degToFlip);
+            transform.RotateAround(backPoint, axis, degToFlip);
         }
     }
 
@@ -73,9 +63,25 @@ public class Block : MonoBehaviour {
     public bool CanFlip(Util.Direction direction) {
         // TODO check if directionally blocked
         return direction switch {
-            Util.Direction.Right => rightSensor.collidingBlock != null,
-            Util.Direction.Left => leftSensor.collidingBlock != null,
+            Util.Direction.Right => rightSensor.collidingBlock == null,
+            Util.Direction.Left => leftSensor.collidingBlock == null,
             _ => false
         };
+    }
+
+    public void Flip(Util.Direction direction) {
+        var flipModifier = (direction == Util.Direction.Right ? 1 : -1);
+        frontPoint = transform.TransformPoint(new Vector3(flipModifier * SmallEdgeLength / 2, -0.5f, 0.5f));
+        backPoint = transform.TransformPoint(new Vector3(flipModifier * 0.5f, -0.5f, -0.5f));
+        axis = frontPoint - backPoint;
+        angle += flipModifier * 20;
+        GoToPosition();
+
+        flipDeg = flipModifier * -90; //TODO
+        transform.RotateAround(backPoint, axis, -flipDeg); //TODO
+    }
+    
+    public bool IsFlipping() {
+        return flipDeg != 0;
     }
 }

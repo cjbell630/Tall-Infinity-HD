@@ -985,14 +985,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03cc8dae8b459749938ea5ffd1e2342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flippingDirection: 0
+  flippingDirection: 4
   angle: 0
   layer: 0
   outline: {fileID: 1846742870}
-  upSensor: {fileID: 0}
-  leftSensor: {fileID: 0}
-  downSensor: {fileID: 0}
-  rightSensor: {fileID: 0}
+  upSensor: {fileID: 1369997141}
+  leftSensor: {fileID: 446142343}
+  downSensor: {fileID: 135224231}
+  rightSensor: {fileID: 1352901094}
   ready: 0
 --- !u!4 &1349083150
 Transform:
