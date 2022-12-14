@@ -61,8 +61,8 @@ public class Player : MonoBehaviour {
             transform.Translate(new Vector3(0, -Mathf.Min(G_UNITS_PER_SEC * Time.deltaTime, layer - Mathf.Floor(layer)),
                 0));
         }
-        
-        
+
+
         /* TODO 
          * flipping not working on negative/positive values of angle
          * base flipping off of player position (player percentage travelled to percentage flipped)
@@ -71,8 +71,8 @@ public class Player : MonoBehaviour {
          * 
          */
         if (flippingBlock != null && flippingBlock.IsFlipping()) {
-            transform.position = new Vector3(flippingBlock.transform.position.x, transform.position.y,
-                flippingBlock.transform.position.z);
+            angle = Block.PositionToAngle(flippingBlock.transform);
+            Block.GoToPosition(transform, angle, layer);
         } else if (horizontalInput != 0) {
             var movementDirection = horizontalInput > 0 ? Util.Direction.Right : Util.Direction.Left;
 

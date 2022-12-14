@@ -55,6 +55,23 @@ public class Block : MonoBehaviour {
         targetTransform.rotation = Quaternion.Euler(0, -angle - 90, 0);
     }
 
+    public static float PositionToAngle(Transform targetTransform) {
+        Debug.Log("transform position x" + targetTransform.position.x);
+        Debug.Log("Mathf.Acos(targetTransform.position.x / Block.RingRad)" +
+                  Mathf.Acos(targetTransform.position.x / Block.RingRad));
+        Debug.Log("Mathf.Acos(targetTransform.position.x / Block.RingRad) / Mathf.Deg2Rad" +
+                  (Mathf.Acos(targetTransform.position.x / Block.RingRad) / Mathf.Deg2Rad));
+        Debug.Log("Mathf.Sign(targetTransform.position.x) * Mathf.Min(Mathf.Abs(targetTransform.position.x), Block.RingRad)" +
+                  (Mathf.Sign(targetTransform.position.x) * Mathf.Min(
+                      Mathf.Abs(targetTransform.position.x), Block.RingRad
+                  )));
+        var minX = Mathf.Sign(targetTransform.position.x) * Mathf.Min(Mathf.Abs(targetTransform.position.x), Block.RingRad);
+        var minZ = Mathf.Sign(targetTransform.position.z) * Mathf.Min(Mathf.Abs(targetTransform.position.z), Block.RingRad);
+        
+        
+        return Mathf.Atan2(minZ, minX) * Mathf.Rad2Deg;
+    }
+
     public void SetOutline(bool on) {
         outline.enabled = on;
         Debug.Log("Outline: " + on);
@@ -80,7 +97,7 @@ public class Block : MonoBehaviour {
         flipDeg = flipModifier * -90; //TODO
         transform.RotateAround(backPoint, axis, -flipDeg); //TODO
     }
-    
+
     public bool IsFlipping() {
         return flipDeg != 0;
     }

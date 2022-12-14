@@ -28,14 +28,16 @@ public class Controls : MonoBehaviour {
     }
 
     void GetInput() {
+        var hasController = Input.GetJoystickNames().Length > 0;
         // TODO keyboard
-        if (
-            Array.Exists(TouchPlatforms, p => p == Application.platform) &&
-            false
-        ) {
-            // TODO if touch platform and no controller connected
-            // TODO touch controls
+        if (hasController) {
+            // controller
+            HorizontalInput = Input.GetAxis("Horizontal");
+            PrimaryButton = Input.GetButton("Submit");
+        } else if(Array.Exists(TouchPlatforms, p => p == Application.platform)) {
+            // touch
         } else {
+            // keyboard
             HorizontalInput = Input.GetAxis("Horizontal");
             PrimaryButton = Input.GetButton("Submit");
         }
