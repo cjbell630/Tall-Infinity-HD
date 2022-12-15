@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockSensor : MonoBehaviour {
     public BlockSensor collidingBlock;
-    // TODO public color
+    public Color color;
 
     // Start is called before the first frame update
     void Start() {

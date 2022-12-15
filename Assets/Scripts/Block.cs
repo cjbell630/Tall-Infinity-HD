@@ -22,6 +22,10 @@ public class Block : MonoBehaviour {
     public bool flipping = false;
 
     public bool ready = false;
+    static readonly int LeftColor = Shader.PropertyToID("_LeftColor");
+    static readonly int RightColor = Shader.PropertyToID("_RightColor");
+    static readonly int UpColor = Shader.PropertyToID("_UpColor");
+    static readonly int DownColor = Shader.PropertyToID("_DownColor");
 
     // Start is called before the first frame update
     void Start() {
@@ -93,5 +97,12 @@ public class Block : MonoBehaviour {
 
     public bool IsFlipping() {
         return flipDeg != 0;
+    }
+    void UpdateShader(){
+        var renderer = GetComponent<Renderer>();
+        renderer.material.SetColor(LeftColor,leftSensor.color);
+        renderer.material.SetColor(RightColor,rightSensor.color);
+        renderer.material.SetColor(UpColor,upSensor.color);
+        renderer.material.SetColor(DownColor,downSensor.color);
     }
 }
