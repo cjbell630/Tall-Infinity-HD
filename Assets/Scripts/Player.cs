@@ -72,6 +72,7 @@ public class Player : MonoBehaviour {
          */
         if (flippingBlock != null && flippingBlock.IsFlipping()) {
             angle = Block.PositionToAngle(flippingBlock.transform);
+            angle += flippingBlock.flipDeg > 0 ? -9.5f : 8.5f;
             Block.GoToPosition(transform, angle, layer);
         } else if (horizontalInput != 0) {
             var movementDirection = horizontalInput > 0 ? Util.Direction.Right : Util.Direction.Left;

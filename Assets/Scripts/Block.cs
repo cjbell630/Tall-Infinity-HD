@@ -18,7 +18,7 @@ public class Block : MonoBehaviour {
     Vector3 frontPoint, backPoint, axis;
 
     public BlockSensor upSensor, leftSensor, downSensor, rightSensor;
-    float flipDeg;
+    public float flipDeg;
 
     public bool ready = false;
 
@@ -56,19 +56,8 @@ public class Block : MonoBehaviour {
     }
 
     public static float PositionToAngle(Transform targetTransform) {
-        Debug.Log("transform position x" + targetTransform.position.x);
-        Debug.Log("Mathf.Acos(targetTransform.position.x / Block.RingRad)" +
-                  Mathf.Acos(targetTransform.position.x / Block.RingRad));
-        Debug.Log("Mathf.Acos(targetTransform.position.x / Block.RingRad) / Mathf.Deg2Rad" +
-                  (Mathf.Acos(targetTransform.position.x / Block.RingRad) / Mathf.Deg2Rad));
-        Debug.Log("Mathf.Sign(targetTransform.position.x) * Mathf.Min(Mathf.Abs(targetTransform.position.x), Block.RingRad)" +
-                  (Mathf.Sign(targetTransform.position.x) * Mathf.Min(
-                      Mathf.Abs(targetTransform.position.x), Block.RingRad
-                  )));
         var minX = Mathf.Sign(targetTransform.position.x) * Mathf.Min(Mathf.Abs(targetTransform.position.x), Block.RingRad);
         var minZ = Mathf.Sign(targetTransform.position.z) * Mathf.Min(Mathf.Abs(targetTransform.position.z), Block.RingRad);
-        
-        
         return Mathf.Atan2(minZ, minX) * Mathf.Rad2Deg;
     }
 
