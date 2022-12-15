@@ -16,6 +16,7 @@ public class Block : MonoBehaviour {
     public Outline outline;
 
     Vector3 frontPoint, backPoint, axis;
+    public Renderer blockRenderer;
 
     public BlockSensor upSensor, leftSensor, downSensor, rightSensor;
     public float flipDeg;
@@ -31,6 +32,7 @@ public class Block : MonoBehaviour {
     void Start() {
         flipDeg = 0;
         outline.enabled = false;
+        UpdateShader();
     }
 
     // Update is called once per frame
@@ -49,6 +51,8 @@ public class Block : MonoBehaviour {
         } else {
             flipping = false; // NOTE this is here bc flipping needs to be set the frame AFTER the flip is done
         }
+
+        UpdateShader(); //TODO only do at certain times
     }
 
     public void GoToPosition() {
@@ -89,6 +93,7 @@ public class Block : MonoBehaviour {
         axis = frontPoint - backPoint;
         angle += flipModifier * 20;
         GoToPosition();
+        CycleColors(direction == Util.Direction.Left);
 
         flipDeg = flipModifier * -90; //TODO
         transform.RotateAround(backPoint, axis, -flipDeg); //TODO
@@ -99,10 +104,26 @@ public class Block : MonoBehaviour {
         return flipDeg != 0;
     }
     void UpdateShader(){
-        var renderer = GetComponent<Renderer>();
-        renderer.material.SetColor(LeftColor,leftSensor.color);
-        renderer.material.SetColor(RightColor,rightSensor.color);
-        renderer.material.SetColor(UpColor,upSensor.color);
-        renderer.material.SetColor(DownColor,downSensor.color);
+        blockRenderer.material.SetColor(LeftColor,leftSensor.color);
+        blockRenderer.material.SetColor(RightColor,rightSensor.color);
+        blockRenderer.material.SetColor(UpColor,upSensor.color);
+        blockRenderer.material.SetColor(DownColor,downSensor.color);
+    }
+
+    void CycleColors(bool clockwise) {
+        //TODO rewrite to make clean
+        var upColor = upSensor.color;
+        if (clockwise) {
+            upSensor.color = leftSensor.color;
+            leftSensor.color = downSensor.color;
+            downSensor.color = rightSensor.color;
+            rightSensor.color = upColor;
+        } else {
+            upSensor.color = rightSensor.color;
+            rightSensor.color = downSensor.color;
+            downSensor.color = leftSensor.color;
+            leftSensor.color = upColor;
+        }
+        UpdateShader();
     }
 }

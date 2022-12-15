@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collidingBlock: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &147461688
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collidingBlock: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &465856384
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +991,7 @@ MonoBehaviour:
   angle: 0
   layer: 0
   outline: {fileID: 1846742870}
+  blockRenderer: {fileID: 1846742871}
   upSensor: {fileID: 1369997141}
   leftSensor: {fileID: 446142343}
   downSensor: {fileID: 135224231}
@@ -1104,6 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collidingBlock: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1369997137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collidingBlock: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1631147584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1248,3 +1253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!23 &1846742871 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3ed58168300aa354a811b62f2e19dff7, type: 3}
+  m_PrefabInstance: {fileID: 1631147584}
+  m_PrefabAsset: {fileID: 0}

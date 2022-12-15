@@ -8,14 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: cobblestone
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: -6465566751694194690, guid: 0184f5a82f4e8ac4abec5ac3905dbc93, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -56,8 +57,39 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_301374d9d22e4fa0a6e9e5e9775b9f0b_Out_0:
+        m_Texture: {fileID: 2800000, guid: 6c87560c63bdb7b42bc71670c2b55b04, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_45124cd124724ccea393613f941e76e7_Out_0:
+        m_Texture: {fileID: 2800000, guid: 342e7a656b5319a4b96ac8ebf3d69d87, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_7a7540bec6be4a8d97a0e6e1e9d5e96d_Out_0:
+        m_Texture: {fileID: 2800000, guid: 2d1df72d1ac61e8499722fbbf5832aa6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_7b0ad7dda263457baf4ef72ba890768e_Out_0:
+        m_Texture: {fileID: 2800000, guid: 2272aae569318384dad90be1c55ae069, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_9058568c26314a40b848c2e5a293dfb3_Out_0:
+        m_Texture: {fileID: 2800000, guid: e6b2cbba54a4e2d4b8545fe8c3613484, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 0
+    - _BUILTIN_CullMode: 2
+    - _BUILTIN_DstBlend: 0
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_Surface: 0
+    - _BUILTIN_ZTest: 4
+    - _BUILTIN_ZWrite: 1
+    - _BUILTIN_ZWriteControl: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -76,5 +108,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DownColor: {r: 1, g: 0.9943777, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LeftColor: {r: 0, g: 0.31740776, b: 1, a: 1}
+    - _RightColor: {r: 1, g: 0, b: 0, a: 1}
+    - _UpColor: {r: 0.12156857, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
