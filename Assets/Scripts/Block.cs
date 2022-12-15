@@ -5,7 +5,7 @@ using cakeslice;
 using UnityEngine;
 
 public class Block : MonoBehaviour {
-    const float degPerSec = 240;
+    public static readonly float degPerSec = 315;
     public static readonly float SmallEdgeLength = 0.647346038583f; // 1-2tan(10deg)
     public static readonly float RingRad = 2.33564090981f; // (tan(80deg)-1)/2
     public static readonly float Height = 1;
@@ -19,6 +19,7 @@ public class Block : MonoBehaviour {
 
     public BlockSensor upSensor, leftSensor, downSensor, rightSensor;
     public float flipDeg;
+    public bool flipping = false;
 
     public bool ready = false;
 
@@ -41,6 +42,8 @@ public class Block : MonoBehaviour {
             }
 
             transform.RotateAround(backPoint, axis, degToFlip);
+        } else {
+            flipping = false; // NOTE this is here bc flipping needs to be set the frame AFTER the flip is done
         }
     }
 
@@ -85,6 +88,7 @@ public class Block : MonoBehaviour {
 
         flipDeg = flipModifier * -90; //TODO
         transform.RotateAround(backPoint, axis, -flipDeg); //TODO
+        flipping = true;
     }
 
     public bool IsFlipping() {

@@ -8,7 +8,7 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour {
-    float angle;
+    public float angle;
     float tiltAngle = 0;
     public float layer;
     static readonly float DEG_PER_SEC = 70f; // deg per sec
@@ -19,6 +19,8 @@ public class Player : MonoBehaviour {
 
     static readonly float
         TILT_DEG_PER_SEC = MAX_TILT * V_UNITS_PER_SEC / (Block.Height * 4); // takes 2 blocks to tilt 90 deg
+
+    float flipAngPerSec = 0;
 
     VerticalSensor verticalSensor;
     HorizontalSensor horizontalSensor;
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour {
         if (!verticalSensor.colliding) {
             // if there is nothing below player
             // TODO player movement should completely overwrite gravity... right?
+            // TODO need to be able to be pushed up by block
             Debug.Log("notjing below");
             transform.Translate(new Vector3(0, -G_UNITS_PER_SEC * Time.deltaTime, 0));
         } else if (!IsEvenlyOnLayer()) {
@@ -71,24 +74,19 @@ public class Player : MonoBehaviour {
          * 
          */
         if (flippingBlock != null && flippingBlock.IsFlipping()) {
-            angle = Block.PositionToAngle(flippingBlock.transform);
-            angle += flippingBlock.flipDeg > 0 ? -9.5f : 8.5f;
+            angle += flipAngPerSec * Time.deltaTime;
             Block.GoToPosition(transform, angle, layer);
         } else if (horizontalInput != 0) {
             var movementDirection = horizontalInput > 0 ? Util.Direction.Right : Util.Direction.Left;
 
             int angleModUhh = Util.LogicallyCorrectModulus((int)angle, 20); // TODO come on bruh beter name pls
             if (primaryButton && IsEvenlyOnLayer() &&
-                ((angleModUhh is 9 && movementDirection is Util.Direction.Right) ||
-                 (angleModUhh is 10 && movementDirection is Util.Direction.Left))) {
-                if (verticalSensor.colliding) {
-                    if (verticalSensor.targetedBlock.CanFlip(movementDirection)) {
-                        verticalSensor.targetedBlock.Flip(movementDirection);
-                        flippingBlock = verticalSensor.targetedBlock;
-                    } else {
-                        //TODO inform user they cant flip
-                    }
-                }
+                ((angleModUhh is >= 7 and <= 9 && movementDirection is Util.Direction.Right) ||
+                 (angleModUhh is >= 10 and <= 12 && movementDirection is Util.Direction.Left) ||
+                 (flippingBlock != null && flippingBlock.flipping) // TODO allows immediate direction change
+                )) {
+                Debug.Log("Good angle mod: " + angleModUhh);
+                TryFlip(movementDirection);
             } else {
                 if (horizontalSensor.isColliding /*&& Math.Abs(Util.LogicallyCorrectModulus((int)angle, 20)) == 0*/) {
                     transform.Translate(
@@ -126,5 +124,17 @@ public class Player : MonoBehaviour {
 
         Debug.DrawLine(transform.position, verticalSensor.transform.position, Color.red);
         Debug.DrawLine(transform.position, horizontalSensor.transform.position, Color.green);
+    }
+
+    bool TryFlip(Util.Direction movementDirection) {
+        if (!(verticalSensor.colliding && verticalSensor.targetedBlock.CanFlip(movementDirection))) return false;
+
+        verticalSensor.targetedBlock.Flip(movementDirection);
+        flippingBlock = verticalSensor.targetedBlock;
+        // TODO var angleToTranslate = (flippingBlock.angle - angle);
+        var angleToTranslate = flippingBlock.angle - angle;
+        var secToFlip = Mathf.Abs(flippingBlock.flipDeg / Block.degPerSec);
+        flipAngPerSec = angleToTranslate / secToFlip;
+        return true;
     }
 }
