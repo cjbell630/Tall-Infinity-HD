@@ -290,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5be11f6387b5eb419da971e124bbee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  angle: 0
   layer: 0
 --- !u!54 &220534606
 Rigidbody:
@@ -992,6 +993,8 @@ MonoBehaviour:
   leftSensor: {fileID: 446142343}
   downSensor: {fileID: 135224231}
   rightSensor: {fileID: 1352901094}
+  flipDeg: 0
+  flipping: 0
   ready: 0
 --- !u!4 &1349083150
 Transform:
@@ -1211,6 +1214,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3ed58168300aa354a811b62f2e19dff7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 219f75db72141ae41946d15648faef9d, type: 2}
     - target: {fileID: 919132149155446097, guid: 3ed58168300aa354a811b62f2e19dff7, type: 3}
       propertyPath: m_Name
       value: TrapezoidalPrism
