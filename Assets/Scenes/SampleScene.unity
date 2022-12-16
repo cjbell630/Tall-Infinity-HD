@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00029d4ba05af1542a6b5c17d7c2bab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 1349083149}
+  blockPrefab: {fileID: 1349083149}
   mainCamera: {fileID: 963194227}
   gameState: 0
 --- !u!4 &421601037

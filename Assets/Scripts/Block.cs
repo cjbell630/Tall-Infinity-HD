@@ -103,7 +103,7 @@ public class Block : MonoBehaviour {
     public bool IsFlipping() {
         return flipDeg != 0;
     }
-    void UpdateShader(){
+    public void UpdateShader(){
         blockRenderer.material.SetColor(LeftColor,leftSensor.color);
         blockRenderer.material.SetColor(RightColor,rightSensor.color);
         blockRenderer.material.SetColor(UpColor,upSensor.color);

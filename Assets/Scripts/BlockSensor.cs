@@ -14,7 +14,7 @@ public class BlockSensor : MonoBehaviour {
     void Update() {
     }
 
-    //TODO copied from VerticalSensor; abstractifuy
+    //TODO copied from VerticalSensor; abstractifuynewPrism.iupSensor.color = 
     void OnTriggerEnter(Collider other) {
         Debug.Log("ttrigger enter");
         var otherBlock = other.GetComponent<BlockSensor>();
