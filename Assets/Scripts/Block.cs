@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using cakeslice;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ public class Block : MonoBehaviour {
     public static readonly float Height = 1;
 
     public float angle;
-    public int layer;
+    public float layer;
 
     public Outline outline;
 
@@ -28,11 +26,16 @@ public class Block : MonoBehaviour {
     static readonly int UpColor = Shader.PropertyToID("_UpColor");
     static readonly int DownColor = Shader.PropertyToID("_DownColor");
 
+    bool spawning = false;
+    int numToSpawn = 0;
+    int targetLayer = -1;
+
     // Start is called before the first frame update
     void Start() {
         flipDeg = 0;
         outline.enabled = false;
         UpdateShader();
+        layer = 0;
     }
 
     // Update is called once per frame
@@ -52,6 +55,23 @@ public class Block : MonoBehaviour {
             flipping = false; // NOTE this is here bc flipping needs to be set the frame AFTER the flip is done
         }
 
+        if (spawning) {
+            if(layer < targetLayer) {
+                layer += 0.1f;
+                if (layer > targetLayer) {
+                    layer = targetLayer;
+                    spawning = numToSpawn > 0;
+                }
+                transform.position = new Vector3(transform.position.x, layer, transform.position.z);
+            }
+            if (numToSpawn > 0) {
+                Block newBlock = Instantiate(this, transform);
+                newBlock.RandomizeColors(); // TODO randomize rotation thingy as well
+                targetLayer = (int)layer + 1;
+                numToSpawn--;
+            }
+        }
+
         UpdateShader(); //TODO only do at certain times
     }
 
@@ -67,8 +87,10 @@ public class Block : MonoBehaviour {
     }
 
     public static float PositionToAngle(Transform targetTransform) {
-        var minX = Mathf.Sign(targetTransform.position.x) * Mathf.Min(Mathf.Abs(targetTransform.position.x), Block.RingRad);
-        var minZ = Mathf.Sign(targetTransform.position.z) * Mathf.Min(Mathf.Abs(targetTransform.position.z), Block.RingRad);
+        var minX = Mathf.Sign(targetTransform.position.x) *
+                   Mathf.Min(Mathf.Abs(targetTransform.position.x), Block.RingRad);
+        var minZ = Mathf.Sign(targetTransform.position.z) *
+                   Mathf.Min(Mathf.Abs(targetTransform.position.z), Block.RingRad);
         return Mathf.Atan2(minZ, minX) * Mathf.Rad2Deg;
     }
 
@@ -103,11 +125,12 @@ public class Block : MonoBehaviour {
     public bool IsFlipping() {
         return flipDeg != 0;
     }
-    public void UpdateShader(){
-        blockRenderer.material.SetColor(LeftColor,leftSensor.color);
-        blockRenderer.material.SetColor(RightColor,rightSensor.color);
-        blockRenderer.material.SetColor(UpColor,upSensor.color);
-        blockRenderer.material.SetColor(DownColor,downSensor.color);
+
+    public void UpdateShader() {
+        blockRenderer.material.SetColor(LeftColor, leftSensor.color);
+        blockRenderer.material.SetColor(RightColor, rightSensor.color);
+        blockRenderer.material.SetColor(UpColor, upSensor.color);
+        blockRenderer.material.SetColor(DownColor, downSensor.color);
     }
 
     void CycleColors(bool clockwise) {
@@ -124,6 +147,30 @@ public class Block : MonoBehaviour {
             downSensor.color = leftSensor.color;
             leftSensor.color = upColor;
         }
+
         UpdateShader();
+    }
+
+    public void Set() {
+        // TODO rest of sensors
+        if (downSensor.collidingBlock != null && downSensor.color == downSensor.collidingBlock.color) {
+            //downSensor.collidingBlock.Set(); TODO
+            numToSpawn = 1;
+        }
+    }
+
+
+    // TODO make this available for blocks too
+    bool IsEvenlyOnLayer() {
+        return layer - Mathf.Floor(layer) == 0;
+    }
+
+
+    public void RandomizeColors() {
+        this.upSensor.color = Util.RandomColor(new Color[] { });
+        this.downSensor.color = Util.RandomColor(new[] { this.upSensor.color });
+        this.leftSensor.color = Util.RandomColor(new[] { this.upSensor.color, this.downSensor.color });
+        this.rightSensor.color = Util.RandomColor(new[]
+            { this.upSensor.color, this.downSensor.color, this.leftSensor.color });
     }
 }

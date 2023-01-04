@@ -44,14 +44,24 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
     }
-
+    
+    // TODO make this available for blocks too
     bool IsEvenlyOnLayer() {
         return layer - Mathf.Floor(layer) == 0;
     }
 
-    public void UpdatePosition(float horizontalInput, bool primaryButton) {
+    public void UpdatePosition(float horizontalInput, Controls.ButtonState primaryButton) {
         // TODO make primaryButton ButtonState
         var increaseTilt = false;
+        
+        /* SET  BLOCKS */
+        if (flippingBlock != null && // there is a block
+            !flippingBlock.flipping && // it is not flipping
+            primaryButton == Controls.ButtonState.Up) { // and the button has just been released
+            // set the block
+            flippingBlock.Set();
+        }
+        
         if (!verticalSensor.colliding) {
             // if there is nothing below player
             // TODO player movement should completely overwrite gravity... right?
@@ -60,9 +70,14 @@ public class Player : MonoBehaviour {
             transform.Translate(new Vector3(0, -G_UNITS_PER_SEC * Time.deltaTime, 0));
         } else if (!IsEvenlyOnLayer()) {
             Debug.Log(layer - Mathf.Floor(layer));
+            if(layer - Mathf.Floor(layer) < 0.5) {
+                transform.Translate(new Vector3(0, -Mathf.Min(G_UNITS_PER_SEC * Time.deltaTime, layer - Mathf.Floor(layer)),
+                    0));
+            } else {
+                transform.position = new Vector3(transform.position.x, verticalSensor.targetedBlock.layer + 1, transform.position.z);
+                layer = verticalSensor.targetedBlock.layer + 1;
+            }
             // if there is something below the player but the palyer is not evenly on a layer
-            transform.Translate(new Vector3(0, -Mathf.Min(G_UNITS_PER_SEC * Time.deltaTime, layer - Mathf.Floor(layer)),
-                0));
         }
 
 
@@ -79,8 +94,8 @@ public class Player : MonoBehaviour {
         } else if (horizontalInput != 0) {
             var movementDirection = horizontalInput > 0 ? Util.Direction.Right : Util.Direction.Left;
 
-            int angleModUhh = Util.LogicallyCorrectModulus((int)angle, 20); // TODO come on bruh beter name pls
-            if (primaryButton && IsEvenlyOnLayer() &&
+            int angleModUhh = Util.LogicallyCorrectModulus((int)angle, 20); // TODO come on bruh better name pls
+            if (primaryButton < Controls.ButtonState.Neutral && IsEvenlyOnLayer() &&
                 ((angleModUhh is >= 7 and <= 9 && movementDirection is Util.Direction.Right) ||
                  (angleModUhh is >= 10 and <= 12 && movementDirection is Util.Direction.Left) ||
                  (flippingBlock != null && flippingBlock.flipping) // TODO allows immediate direction change
