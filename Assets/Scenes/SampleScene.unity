@@ -293,8 +293,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 0
   layer: 0
-  verticalSensor: {fileID: 0}
-  horizontalSensor: {fileID: 0}
+  verticalSensor: {fileID: 147461691}
+  horizontalSensor: {fileID: 905643392}
 --- !u!54 &220534606
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -778,7 +778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 905643389}
   - component: {fileID: 905643391}
-  - component: {fileID: 905643390}
+  - component: {fileID: 905643392}
   m_Layer: 0
   m_Name: HorizontalSensor
   m_TagString: Untagged
@@ -801,19 +801,6 @@ Transform:
   m_Father: {fileID: 220534604}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &905643390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905643388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef313d28ea4cd4949b3881d18c6134fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isColliding: 0
 --- !u!65 &905643391
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -827,6 +814,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &905643392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905643388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef313d28ea4cd4949b3881d18c6134fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collidingObjects: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
