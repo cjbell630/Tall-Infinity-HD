@@ -102,8 +102,8 @@ public class Block : MonoBehaviour {
     public bool CanFlip(Util.Direction direction) {
         // TODO check if directionally blocked
         return direction switch {
-            Util.Direction.Right => rightSensor.collidingBlock == null,
-            Util.Direction.Left => leftSensor.collidingBlock == null,
+            Util.Direction.Right => rightSensor.IsColliding(),
+            Util.Direction.Left => leftSensor.IsColliding(),
             _ => false
         };
     }
@@ -153,7 +153,7 @@ public class Block : MonoBehaviour {
 
     public void Set() {
         // TODO rest of sensors
-        if (downSensor.collidingBlock != null && downSensor.color == downSensor.collidingBlock.color) {
+        if (downSensor.collidingObjects[0] != null && downSensor.color == downSensor.collidingObjects[0].color) {
             //downSensor.collidingBlock.Set(); TODO
             numToSpawn = 1;
         }
