@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class GravitySensor : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class GravitySensor : Sensor<Block> {
+    public Block HighestCollidingObject() {
+        if (collidingObjects.Count == 0) {
+            return null;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var highest = collidingObjects[0];
+        foreach (
+            var currBlock in collidingObjects.Where(
+                currBlock => currBlock.transform.position.y > highest.transform.position.y
+            )
+        ) {
+            highest = currBlock;
+        }
+
+        return highest;
     }
 }

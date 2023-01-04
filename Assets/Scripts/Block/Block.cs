@@ -102,8 +102,8 @@ public class Block : MonoBehaviour {
     public bool CanFlip(Util.Direction direction) {
         // TODO check if directionally blocked
         return direction switch {
-            Util.Direction.Right => rightSensor.IsColliding(),
-            Util.Direction.Left => leftSensor.IsColliding(),
+            Util.Direction.Right => !rightSensor.IsColliding(),
+            Util.Direction.Left => !leftSensor.IsColliding(),
             _ => false
         };
     }

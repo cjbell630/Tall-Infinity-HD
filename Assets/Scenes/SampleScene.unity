@@ -295,6 +295,7 @@ MonoBehaviour:
   layer: 0
   verticalSensor: {fileID: 147461691}
   horizontalSensor: {fileID: 905643392}
+  gravitySensor: {fileID: 2012790078}
 --- !u!54 &220534606
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1270,6 +1271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2012790076}
   - component: {fileID: 2012790077}
+  - component: {fileID: 2012790078}
   m_Layer: 0
   m_Name: GravitySensor
   m_TagString: Untagged
@@ -1303,5 +1305,18 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Size: {x: 0.5, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2012790078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012790075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0fa45cc2a0e81439964a47a7da267c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collidingObjects: []

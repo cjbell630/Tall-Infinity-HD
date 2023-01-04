@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
 
     public Sensor<Block> verticalSensor;
     public Sensor<Block> horizontalSensor;
+    public GravitySensor gravitySensor;
     PlayerPlane playerPlane;
 
     Block flippingBlock;
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour {
         int angleMod = Util.LogicallyCorrectModulus((int)angle, 20);
         Block.GoToPosition(verticalSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20),
             Mathf.FloorToInt(layer - 1));
+        Block.GoToPosition(gravitySensor.transform, angle,
+            layer - 0.5f);
     }
 
     // Update is called once per frame
@@ -60,21 +63,17 @@ public class Player : MonoBehaviour {
             flippingBlock.Set();
         }
         
-        if (!verticalSensor.IsColliding()) {
+        if (!gravitySensor.IsColliding()) {
             // if there is nothing below player
             // TODO player movement should completely overwrite gravity... right?
             // TODO need to be able to be pushed up by block
             Debug.Log("notjing below");
             transform.Translate(new Vector3(0, -G_UNITS_PER_SEC * Time.deltaTime, 0));
         } else if (!IsEvenlyOnLayer()) {
+            //TODO causes issues with horizontal collision
             Debug.Log(layer - Mathf.Floor(layer));
-            if(layer - Mathf.Floor(layer) < 0.5) {
-                transform.Translate(new Vector3(0, -Mathf.Min(G_UNITS_PER_SEC * Time.deltaTime, layer - Mathf.Floor(layer)),
-                    0));
-            } else {
-                transform.position = new Vector3(transform.position.x, verticalSensor.collidingObjects[0].layer + 1, transform.position.z);
-                layer = verticalSensor.collidingObjects[0].layer + 1;
-            }
+            layer = gravitySensor.HighestCollidingObject().transform.position.y + 1;
+            transform.position = new Vector3(transform.position.x, layer, transform.position.z);
             // if there is something below the player but the palyer is not evenly on a layer
         }
 
@@ -130,6 +129,8 @@ public class Player : MonoBehaviour {
         int angleMod = Util.LogicallyCorrectModulus((int)angle, 20);
         // set sensor position to the position of the block with the majority of the player over it
         Block.GoToPosition(verticalSensor.transform, angle - angleMod + (angleMod < 10 ? 0 : 20), layer - 1);
+        Block.GoToPosition(gravitySensor.transform, angle,
+            layer - 0.5f);
         Block.GoToPosition(horizontalSensor.transform,
             angle - angleMod + (angleMod < 10 ? 0 : 20) /*+ (horizontalInput > 0 ? 20 : -20)*/,
             Mathf.Floor(layer));
@@ -137,6 +138,7 @@ public class Player : MonoBehaviour {
 
         Debug.DrawLine(transform.position, verticalSensor.transform.position, Color.red);
         Debug.DrawLine(transform.position, horizontalSensor.transform.position, Color.green);
+        Debug.DrawLine(transform.position, gravitySensor.transform.position, Color.blue);
     }
 
     bool TryFlip(Util.Direction movementDirection) {
